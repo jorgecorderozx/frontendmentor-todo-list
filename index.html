@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
   <title>Frontend Mentor | Todo app</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 0.6875rem; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
 </head>
+
 <body>
 
-  Todo
+  <header>
+    <h1>Todo</h1>
+    <button type="button" class="theme-toggle">
+      <img src="images/icon-moon.svg" alt="light/dark mode icon">
+    </button>
+  </header>
 
-  <!-- Add dynamic number --> items left
+  <form >
+    <input type="text">
+  </form>
+  <main>
+    <ul class="tasks-wrapper"></ul>
+    <section class="tasks-wrapper-info">
+      <p>
+        <span class="remaining-items"></span>
+        items left
+      </p>
+      <button type="button" class="clear">
+        Clear Completed
+      </button>
+    </section>
 
-  All
-  Active 
-  Completed
-
-  Clear Completed
-
-  Drag and drop to reorder list
-
-  <footer class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    <section class="categories-wrapper">
+      <button type="button">All</button>
+      <button type="button">Active</button>
+      <button type="button">Completed</button>
+    </section>
+  </main>
+  <footer>
+    Drag and drop to reorder list
   </footer>
 </body>
+
 </html>
