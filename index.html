@@ -16,37 +16,44 @@
 
 <body>
 
-  <header>
+  <header class="flex">
     <h1>Todo</h1>
     <button type="button" class="theme-toggle">
       <img src="images/icon-moon.svg" alt="light/dark mode icon">
     </button>
   </header>
 
-  <form >
-    <input type="text">
-  </form>
-  <main>
-    <ul class="tasks-wrapper"></ul>
-    <section class="tasks-wrapper-info">
-      <p>
-        <span class="remaining-items"></span>
-        items left
-      </p>
-      <button type="button" class="clear">
-        Clear Completed
-      </button>
+  <main class="flex flex-column">
+    <form class="card-section">
+      <input type="text" placeholder="Create a new todo...">
+    </form>
+    <div>
+      <ul class="tasks-wrapper card-section">
+        <li>Test item</li>
+        <li>Test item</li>
+        <li>Test item</li>
+      </ul>
+      <section class="tasks-wrapper-info flex card-section">
+        <p>
+          <span class="remaining-items"></span>
+          items left
+        </p>
+        <button type="button" class="clear">
+          Clear Completed
+        </button>
+      </section>
+    </div>
+
+    <section class="categories-wrapper flex card-section">
+      <button type="button" id="all-btn">All</button>
+      <button type="button" id="active-btn">Active</button>
+      <button type="button" id="completed-btn">Completed</button>
     </section>
 
-    <section class="categories-wrapper">
-      <button type="button">All</button>
-      <button type="button">Active</button>
-      <button type="button">Completed</button>
-    </section>
+    <footer>
+      <p>Drag and drop to reorder list</p>
+    </footer>
   </main>
-  <footer>
-    Drag and drop to reorder list
-  </footer>
 </body>
 
 </html>

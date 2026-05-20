@@ -1,0 +1,85 @@
+:root{
+    --ltmode-blue-500: hsl(220, 98%, 61%);
+    --ltmode-gray-50: hsl(0, 0%, 98%);
+    --ltmode-purple-300:hsl(234, 39%, 85%);
+    --ltmode-gray-300:hsl(233, 11%, 84%);
+    --ltmode-gray-600: hsl(236, 9%, 61%);
+    --ltmode-navy-850:hsl(235, 19%, 35%);
+
+    --ntmode-navy-950:  hsl(235, 21%, 11%);
+    --ntmode-navy-900: hsl(235, 24%, 19%);
+    --ntmode-purple-300:hsl(234, 39%, 85%);
+    --ntmode-purple-100-hover: hsl(236, 33%, 92%);
+    --ntmode-purple-600: hsl(235, 16%, 43%);
+    --ntmode-purple-700: hsl(233, 14%, 35%);
+    --ntmode-purple-800: hsl(237, 14%, 26%);
+    --ntmode-gray-600: hsl(236, 9%, 61%);
+
+    --check-background:linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Josefin sans, "sans serif";
+    font-size: 18px;
+    min-height: 100vh;
+    background-color: var(--ltmode-gray-300);
+}
+
+button {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.tasks-wrapper-info > * {
+    color: var(--ltmode-gray-600);
+}
+
+#all-btn {
+    color: var(--ltmode-blue-500);
+}
+
+.card-section {
+    background-color: var(--ltmode-gray-50);
+}
+
+header{
+   background: url(images/bg-mobile-light.jpg) no-repeat  center / cover;
+}
+
+h1 {
+    color: var(--ltmode-gray-50);
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    border: 1px solid var(--ltmode-gray-300);
+}
+
+main {
+    gap: 1rem;
+}
+
+footer {
+    color: var(--ltmode-navy-850);
+}
