@@ -58,14 +58,40 @@ button {
 
 .card-section {
     background-color: var(--ltmode-gray-50);
+    border-radius: 0.5rem;
+
+}
+
+.card-section:not(.tasks-wrapper){
+    padding: 1rem;
+}
+
+
+
+main {
+    gap: 1rem;
+    padding: 1.5rem;
 }
 
 header{
    background: url(images/bg-mobile-light.jpg) no-repeat  center / cover;
+   justify-content: space-between;
+   padding: 3rem 1.5rem; 
+   min-height: 25vh;
+   align-items: flex-start;
 }
 
 h1 {
     color: var(--ltmode-gray-50);
+    text-transform: uppercase;
+    letter-spacing: 12px;
+}
+
+form input {
+    border: none;
+    font-size: inherit;
+    font-family: inherit;
+
 }
 
 ul {
@@ -73,13 +99,26 @@ ul {
 }
 
 li {
-    border: 1px solid var(--ltmode-gray-300);
+    border-bottom: 2px solid;
+    border-color: var(--ltmode-gray-300);
+    padding: 1rem;
+    color: var(--ltmode-navy-850);
+
 }
 
-main {
+.tasks-wrapper-info {
+    justify-content: space-between;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.categories-wrapper {
+    justify-content: center;
     gap: 1rem;
 }
 
+
 footer {
     color: var(--ltmode-navy-850);
+    align-self: center;
+    margin-top: 2rem;
 }
