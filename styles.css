@@ -14,8 +14,6 @@
     --ntmode-purple-700: hsl(233, 14%, 35%);
     --ntmode-purple-800: hsl(237, 14%, 26%);
     --ntmode-gray-600: hsl(236, 9%, 61%);
-
-    --check-background:linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
 }
 
 
@@ -67,6 +65,12 @@ button {
 }
 
 
+.check {
+    border: 2px solid var(--ltmode-gray-300);
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+}
 
 main {
     gap: 1rem;
@@ -87,13 +91,21 @@ h1 {
     letter-spacing: 12px;
 }
 
+form {
+    align-items: center;
+    gap: 0.5rem;
+}
+
+form input[type="text"] {
+    padding: 0.125rem 0 0 0;
+}
+
 form input {
     border: none;
     font-size: inherit;
     font-family: inherit;
 
 }
-
 ul {
     list-style-type: none;
 }
@@ -103,7 +115,16 @@ li {
     border-color: var(--ltmode-gray-300);
     padding: 1rem;
     color: var(--ltmode-navy-850);
+    align-items: center;
+    gap: 0.5rem;
 
+}
+
+.cross {
+    background: url(images/icon-cross.svg) no-repeat center;
+    height: 25px;
+    width: 25px;
+    margin-left: auto;
 }
 
 .tasks-wrapper-info {
