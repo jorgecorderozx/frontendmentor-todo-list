@@ -1,5 +1,6 @@
-let tasksContainer = document.querySelector(".tasks-wrapper")
-
+let tasksContainer = document.querySelector(".tasks-wrapper");
+let form = document.querySelector("form");
+let taskInput = document.getElementById("new-todo");
 function createTask(taskName){
     let li = document.createElement("li")
     let checkButton = document.createElement("button");
@@ -22,4 +23,18 @@ function addClass(tag, className){
     tag.classList.add(className);
 }
 
-tasksContainer.appendChild(createTask("Test item"));
+function renderTask(){
+    if(taskInput.value === "") {
+        return;
+    } 
+    else{
+        tasksContainer.appendChild(createTask(taskInput.value));
+        taskInput.value = "";
+    }
+}
+
+form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    renderTask();
+
+})
