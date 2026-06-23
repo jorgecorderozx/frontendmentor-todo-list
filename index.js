@@ -1,11 +1,20 @@
 let tasksContainer = document.querySelector(".tasks-wrapper");
 let form = document.querySelector("form");
 let taskInput = document.getElementById("new-todo");
+let idCounter = 0;
+
+let tasks = [];
+
+function addClass(tag, className){
+    tag.classList.add(className);
+}
+
 function createTask(taskName){
     let li = document.createElement("li")
     let checkButton = document.createElement("button");
     let task = document.createElement("span");
     task.textContent = taskName;
+    saveTask(taskName);
     let crossButton = document.createElement("button");
 
 
@@ -19,8 +28,14 @@ function createTask(taskName){
     return li;
 }
 
-function addClass(tag, className){
-    tag.classList.add(className);
+function saveTask(taskName){
+    idCounter++;
+    let task = {
+        id: idCounter,
+        text: taskName,
+        completed: false
+    }
+    tasks.push(task)
 }
 
 function renderTask(){
