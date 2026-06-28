@@ -31,12 +31,14 @@ function createTask(taskName){
         if(taskObject){
             taskObject.completed = li.classList.contains("completed");
         }
+        updateItemsLeft()
     })
 
     crossButton.addEventListener("click", () =>{
         const id = Number(li.dataset.id);
         tasks = tasks.filter(t => t.id !== id);
         li.remove()
+        updateItemsLeft()
     })
 
     return li;
@@ -60,6 +62,7 @@ function renderTask(){
     else{
         tasksContainer.appendChild(createTask(taskInput.value));
         taskInput.value = "";
+        updateItemsLeft();
     }
 }
 
@@ -68,3 +71,9 @@ form.addEventListener("submit", (e)=>{
     renderTask();
 
 })
+
+function updateItemsLeft(){
+    const remainingItems = document.querySelector(".remaining-items");
+    const remainingCount = tasks.filter(t => t.completed !== true).length
+    remainingItems.textContent = remainingCount;
+}
