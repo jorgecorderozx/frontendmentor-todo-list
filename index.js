@@ -14,10 +14,8 @@ function createTask(taskName){
     let checkButton = document.createElement("button");
     let task = document.createElement("span");
     task.textContent = taskName;
-    saveTask(taskName);
     let crossButton = document.createElement("button");
-
-
+    li.dataset.id = saveTask(taskName);
     addClass(li, "flex");
     addClass(checkButton, "check");
     addClass(crossButton, "cross");
@@ -25,6 +23,22 @@ function createTask(taskName){
     li.appendChild(checkButton);
     li.appendChild(task)
     li.appendChild(crossButton);
+
+    checkButton.addEventListener("click", ()=>{
+        li.classList.toggle("completed")
+        const id = Number(li.dataset.id);
+        const taskObject = tasks.find(t => t.id === id);
+        if(taskObject){
+            taskObject.completed = li.classList.contains("completed");
+        }
+    })
+
+    crossButton.addEventListener("click", () =>{
+        const id = Number(li.dataset.id);
+        tasks = tasks.filter(t => t.id !== id);
+        li.remove()
+    })
+
     return li;
 }
 
@@ -36,6 +50,7 @@ function saveTask(taskName){
         completed: false
     }
     tasks.push(task)
+    return task.id;
 }
 
 function renderTask(){
