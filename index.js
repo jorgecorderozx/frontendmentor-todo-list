@@ -75,5 +75,5 @@ form.addEventListener("submit", (e)=>{
 function updateItemsLeft(){
     const remainingItems = document.querySelector(".remaining-items");
     const remainingCount = tasks.filter(t => t.completed !== true).length
-    remainingItems.textContent = remainingCount;
+    remainingCount === 1 ? remainingItems.textContent = `${remainingCount} item left` :  remainingItems.textContent = `${remainingCount} items left`;
 }

@@ -70,6 +70,18 @@ button {
     border-radius: 50%;
     height: 25px;
     width: 25px;
+    cursor: pointer;
+}
+
+.completed .check {
+    background-image: url(images/icon-check.svg), linear-gradient( hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, center;
+}
+
+.completed span {
+    text-decoration: line-through;
+    color: var(--ltmode-gray-600);
 }
 
 main {
@@ -118,6 +130,7 @@ li {
     color: var(--ltmode-navy-850);
     align-items: center;
     gap: 0.5rem;
+    cursor: pointer;
 
 }
 
@@ -126,6 +139,7 @@ li {
     height: 25px;
     width: 25px;
     margin-left: auto;
+    cursor: pointer;
 }
 
 .tasks-wrapper-info {
