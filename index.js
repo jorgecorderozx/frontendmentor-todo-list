@@ -1,6 +1,7 @@
 let tasksContainer = document.querySelector(".tasks-wrapper");
 let form = document.querySelector("form");
 let taskInput = document.getElementById("new-todo");
+let clearButton = document.querySelector(".clear");
 let idCounter = 0;
 
 let tasks = [];
@@ -28,12 +29,21 @@ function completeTask(taskItem){
             }
         }
         taskItem.classList.toggle("completed")
+        remainingItemsCounter()
 }
 
 function deleteTask(taskItem){
     tasks = tasks.filter(task => task.id !== Number(taskItem.dataset.id));
     taskItem.remove();
+    remainingItemsCounter();
 
+}
+
+
+function remainingItemsCounter(){
+    const itemsLeftCounter = document.querySelector(".remaining-items");
+    const remainingItems = tasks.filter(task => task.completed !== true);
+    remainingItems.length === 1 ? itemsLeftCounter.textContent = "1 item left" : itemsLeftCounter.textContent = `${remainingItems.length} items left`;
 }
 
 function renderTask(newTask){
@@ -72,5 +82,6 @@ form.addEventListener("submit", (e)=>{
         const newTask = createTask(taskInput.value);
         renderTask(newTask);
         taskInput.value = "";
+        remainingItemsCounter()
     }
 })
