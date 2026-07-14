@@ -22,28 +22,37 @@ function createTask(taskDescription){
 }
 
 function completeTask(taskItem){
-     for(task in tasks){
-            if(tasks[task].id === Number(taskItem.dataset.id)){
-                tasks[task].completed = !tasks[task].completed;
-                break;
-            }
-        }
-        taskItem.classList.toggle("completed")
-        remainingItemsCounter()
+        const completedTask = tasks.find(task => task.id === Number(taskItem.dataset.id));
+        completedTask.completed = !completedTask.completed;
+        itemsLeftCounter();
+        completeTaskUI(taskItem);
+}
+
+function completeTaskUI(taskItem){
+    taskItem.classList.toggle("completed");
+
 }
 
 function deleteTask(taskItem){
     tasks = tasks.filter(task => task.id !== Number(taskItem.dataset.id));
-    taskItem.remove();
-    remainingItemsCounter();
+    deleteTaskUI(taskItem);
+    itemsLeftCounter();
 
 }
 
+function deleteTaskUI(taskItem){
+    taskItem.remove();
+}
 
-function remainingItemsCounter(){
-    const itemsLeftCounter = document.querySelector(".remaining-items");
-    const remainingItems = tasks.filter(task => task.completed !== true);
-    remainingItems.length === 1 ? itemsLeftCounter.textContent = "1 item left" : itemsLeftCounter.textContent = `${remainingItems.length} items left`;
+
+function itemsLeftCounter(){
+    const itemsLeft = tasks.filter(task => task.completed !== true);
+    itemsLeftUI(itemsLeft);
+}
+
+function itemsLeftUI(itemsLeft){
+    const itemsLeftElement = document.querySelector(".remaining-items");
+    itemsLeft.length === 1 ? itemsLeftElement.textContent = "1 item left" : itemsLeftElement.textContent = `${itemsLeft.length} items left`;
 }
 
 function renderTask(newTask){
@@ -82,6 +91,6 @@ form.addEventListener("submit", (e)=>{
         const newTask = createTask(taskInput.value);
         renderTask(newTask);
         taskInput.value = "";
-        remainingItemsCounter()
+        itemsLeftCounter()
     }
 })
