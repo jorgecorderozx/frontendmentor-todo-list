@@ -3,6 +3,9 @@ let form = document.querySelector("form");
 let taskInput = document.getElementById("new-todo");
 let clearButton = document.querySelector(".clear");
 let idCounter = 0;
+let allFilterBtn = document.getElementById("all-btn");
+let completedFilterBtn = document.getElementById("completed-btn");
+let activeFilterBtn = document.getElementById("active-btn");
 
 let tasks = [];
 
@@ -55,6 +58,38 @@ function itemsLeftUI(itemsLeft){
     itemsLeft.length === 1 ? itemsLeftElement.textContent = "1 item left" : itemsLeftElement.textContent = `${itemsLeft.length} items left`;
 }
 
+function clearAllTasks(){
+    tasksContainer.replaceChildren();
+}
+
+function filterAll(){
+    clearAllTasks();
+   tasks.forEach(task => {
+    const renderedTask = renderTask(task);
+    if(task.completed === true){
+        renderedTask.classList.add("completed");
+    }
+   });
+}
+
+function filterActive(){
+    const activeTasks = tasks.filter(task => task.completed === false);
+    clearAllTasks();
+    activeTasks.forEach(task => {
+        renderTask(task)
+    })
+
+}
+
+function filterCompleted(){
+    const completedTasks = tasks.filter(task => task.completed === true);
+    clearAllTasks()
+    completedTasks.forEach(task =>{
+        const completedTask = renderTask(task);
+        completedTask.classList.add("completed");
+    })
+}
+
 function renderTask(newTask){
     const taskItem = document.createElement("li");
     const checkButton = document.createElement("button");
@@ -81,6 +116,7 @@ function renderTask(newTask){
     })
 
     tasksContainer.appendChild(taskItem)
+    return taskItem;
 
 }
 
@@ -93,4 +129,16 @@ form.addEventListener("submit", (e)=>{
         taskInput.value = "";
         itemsLeftCounter()
     }
+})
+
+activeFilterBtn.addEventListener("click", ()=>{
+    filterActive();
+})
+
+completedFilterBtn.addEventListener("click",()=>{
+    filterCompleted();
+})
+
+allFilterBtn.addEventListener("click",()=>{
+    filterAll();
 })

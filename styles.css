@@ -31,6 +31,10 @@ body {
     background-color: var(--ltmode-gray-300);
 }
 
+.hidden {
+    display: none;
+}
+
 button {
     background: none;
     border: none;
