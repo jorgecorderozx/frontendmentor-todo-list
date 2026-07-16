@@ -6,6 +6,7 @@ let idCounter = 0;
 let allFilterBtn = document.getElementById("all-btn");
 let completedFilterBtn = document.getElementById("completed-btn");
 let activeFilterBtn = document.getElementById("active-btn");
+let filterStatus = "all";
 
 let tasks = [];
 
@@ -27,24 +28,12 @@ function createTask(taskDescription){
 function completeTask(taskItem){
         const completedTask = tasks.find(task => task.id === Number(taskItem.dataset.id));
         completedTask.completed = !completedTask.completed;
-        itemsLeftCounter();
-        completeTaskUI(taskItem);
-}
-
-function completeTaskUI(taskItem){
-    taskItem.classList.toggle("completed");
-
+        updateList();
 }
 
 function deleteTask(taskItem){
     tasks = tasks.filter(task => task.id !== Number(taskItem.dataset.id));
-    deleteTaskUI(taskItem);
-    itemsLeftCounter();
-
-}
-
-function deleteTaskUI(taskItem){
-    taskItem.remove();
+    updateList();
 }
 
 
@@ -62,32 +51,33 @@ function clearAllTasks(){
     tasksContainer.replaceChildren();
 }
 
-function filterAll(){
-    clearAllTasks();
-   tasks.forEach(task => {
-    const renderedTask = renderTask(task);
-    if(task.completed === true){
-        renderedTask.classList.add("completed");
+function callFunctionPerElements(array, functionality){
+    array.forEach(arrayElement =>{
+        functionality(arrayElement);
+    })
+}
+
+function filterTask(value){
+    filterStatus = value;
+}
+
+function updateList(){
+    let tasksToRender = []
+    if(filterStatus === "all"){
+        tasksToRender = tasks;
     }
-   });
-}
-
-function filterActive(){
-    const activeTasks = tasks.filter(task => task.completed === false);
+    else if(filterStatus === "active"){
+        const activeTasks = tasks.filter(task => task.completed === false);
+        tasksToRender = activeTasks;
+    }
+    else if(filterStatus === "completed"){
+        const completedTasks = tasks.filter(task => task.completed === true);
+        tasksToRender = completedTasks;
+    }
     clearAllTasks();
-    activeTasks.forEach(task => {
-        renderTask(task)
-    })
+    callFunctionPerElements(tasksToRender, renderTask);
+    itemsLeftCounter()
 
-}
-
-function filterCompleted(){
-    const completedTasks = tasks.filter(task => task.completed === true);
-    clearAllTasks()
-    completedTasks.forEach(task =>{
-        const completedTask = renderTask(task);
-        completedTask.classList.add("completed");
-    })
 }
 
 function renderTask(newTask){
@@ -98,6 +88,9 @@ function renderTask(newTask){
 
     taskItem.dataset.id = newTask.id;
     taskText.textContent = newTask.description;
+    if(newTask.completed === true) {
+        taskItem.classList.add("completed")
+    }
 
     addClass(taskItem, "flex");
     addClass(checkButton, "check");
@@ -108,11 +101,13 @@ function renderTask(newTask){
     taskItem.appendChild(crossButton);
 
     checkButton.addEventListener("click", ()=>{
-        completeTask(taskItem)
+        completeTask(taskItem);
+        updateList();
     })
 
     crossButton.addEventListener("click", ()=>{
         deleteTask(taskItem);
+        updateList();
     })
 
     tasksContainer.appendChild(taskItem)
@@ -125,20 +120,22 @@ form.addEventListener("submit", (e)=>{
     if(taskInput.value.trim() === "") return
     else{
         const newTask = createTask(taskInput.value);
-        renderTask(newTask);
         taskInput.value = "";
-        itemsLeftCounter()
+        updateList();
     }
 })
 
 activeFilterBtn.addEventListener("click", ()=>{
-    filterActive();
+    filterTask("active");
+    updateList()
 })
 
 completedFilterBtn.addEventListener("click",()=>{
-    filterCompleted();
+    filterTask("completed");
+    updateList()
 })
 
 allFilterBtn.addEventListener("click",()=>{
-    filterAll();
+    filterTask("all");
+    updateList();
 })
