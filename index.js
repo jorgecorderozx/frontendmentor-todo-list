@@ -28,12 +28,10 @@ function createTask(taskDescription){
 function completeTask(taskItem){
         const completedTask = tasks.find(task => task.id === Number(taskItem.dataset.id));
         completedTask.completed = !completedTask.completed;
-        updateList();
 }
 
 function deleteTask(taskItem){
     tasks = tasks.filter(task => task.id !== Number(taskItem.dataset.id));
-    updateList();
 }
 
 
@@ -49,12 +47,6 @@ function itemsLeftUI(itemsLeft){
 
 function clearAllTasks(){
     tasksContainer.replaceChildren();
-}
-
-function callFunctionPerElements(array, functionality){
-    array.forEach(arrayElement =>{
-        functionality(arrayElement);
-    })
 }
 
 function filterTask(value){
@@ -75,7 +67,7 @@ function updateList(){
         tasksToRender = completedTasks;
     }
     clearAllTasks();
-    callFunctionPerElements(tasksToRender, renderTask);
+    tasksToRender.forEach(renderTask)
     itemsLeftCounter()
 
 }
@@ -100,16 +92,6 @@ function renderTask(newTask){
     taskItem.appendChild(taskText);
     taskItem.appendChild(crossButton);
 
-    checkButton.addEventListener("click", ()=>{
-        completeTask(taskItem);
-        updateList();
-    })
-
-    crossButton.addEventListener("click", ()=>{
-        deleteTask(taskItem);
-        updateList();
-    })
-
     tasksContainer.appendChild(taskItem)
     return taskItem;
 
@@ -124,6 +106,19 @@ form.addEventListener("submit", (e)=>{
         updateList();
     }
 })
+
+tasksContainer.addEventListener("click", (e)=>{
+   const taskItem = e.target.closest("li");
+   if (e.target.classList.contains("check")) {
+        completeTask(taskItem);
+        updateList();
+    } 
+    else if (e.target.classList.contains("cross")) {
+        deleteTask(taskItem);
+        updateList();
+    }
+}
+)
 
 activeFilterBtn.addEventListener("click", ()=>{
     filterTask("active");
