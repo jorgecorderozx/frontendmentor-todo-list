@@ -9,9 +9,18 @@ let activeFilterBtn = document.getElementById("active-btn");
 let filterStatus = "all";
 
 let tasks = [];
+let savedTasks = localStorage.getItem("tasks");
+if(savedTasks){
+    tasks = JSON.parse(savedTasks);
+    updateList();
+}
 
 function addClass(tag, className){
     tag.classList.add(className);
+}
+
+function saveTasks(){
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 function createTask(taskDescription){
@@ -21,17 +30,20 @@ function createTask(taskDescription){
         description: taskDescription,
         completed: false
     }
-    tasks.push(task)
+    tasks.push(task);
+    saveTasks();
     return task;
 }
 
 function completeTask(taskItem){
         const completedTask = tasks.find(task => task.id === Number(taskItem.dataset.id));
         completedTask.completed = !completedTask.completed;
+        saveTasks();
 }
 
 function deleteTask(taskItem){
     tasks = tasks.filter(task => task.id !== Number(taskItem.dataset.id));
+    saveTasks();
 }
 
 
