@@ -9,11 +9,6 @@ let activeFilterBtn = document.getElementById("active-btn");
 let filterStatus = "all";
 
 let tasks = [];
-let savedTasks = localStorage.getItem("tasks");
-if(savedTasks){
-    tasks = JSON.parse(savedTasks);
-    updateList();
-}
 
 function addClass(tag, className){
     tag.classList.add(className);
@@ -21,6 +16,23 @@ function addClass(tag, className){
 
 function saveTasks(){
     localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks(){
+    const savedTasks = localStorage.getItem("tasks");
+    if(savedTasks){
+    tasks = JSON.parse(savedTasks);
+}
+}
+
+function setIdCounter(){
+    let greatestId = 0;
+    for(const task of tasks){
+        if(task.id > greatestId){
+            greatestId = task.id;
+        }
+    }
+    idCounter = greatestId;
 }
 
 function createTask(taskDescription){
@@ -146,3 +158,7 @@ allFilterBtn.addEventListener("click",()=>{
     filterTask("all");
     updateList();
 })
+
+loadTasks();
+setIdCounter();
+updateList();
