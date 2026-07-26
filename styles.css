@@ -31,8 +31,10 @@ body {
     background-color: var(--ltmode-gray-300);
 }
 
-.hidden {
-    display: none;
+.theme-toggle{
+    height: 30px;
+    width: 30px;
+    background: url(images/icon-sun.svg) no-repeat center / contain;
 }
 
 button {
@@ -115,6 +117,7 @@ form {
 #new-todo {
     padding: 0.125rem 0 0 0;
     width: 100%;
+    outline: none;
 }
 
 form input {
@@ -128,7 +131,7 @@ ul {
 }
 
 li {
-    border-bottom: 2px solid;
+    border-bottom: 1px solid;
     border-color: var(--ltmode-gray-300);
     padding: 1rem;
     color: var(--ltmode-navy-850);
@@ -156,9 +159,60 @@ li {
     gap: 1rem;
 }
 
+.clear {
+    cursor: pointer;
+}
+
 
 footer {
     color: var(--ltmode-navy-850);
     align-self: center;
     margin-top: 2rem;
 }
+
+/*Dark Mode*/
+
+.dark-mode {
+    background-color: var(--ntmode-navy-950);
+}
+
+.dark-mode .card-section {
+    background-color: var(--ntmode-navy-900);
+}
+
+.dark-mode header {
+     background: url(images/bg-mobile-dark.jpg) no-repeat  center / cover;
+}
+
+.dark-mode .theme-toggle {
+    background-image: url(images/icon-moon.svg);
+}
+
+.dark-mode .check {
+    border-color: var(--ntmode-purple-800);
+}
+
+.dark-mode li{
+    border-color: var(--ntmode-purple-700);
+}
+
+.dark-mode li > span, .dark-mode input {
+    color: var(--ntmode-purple-300);
+}
+
+.dark-mode .completed span, .dark-mode .tasks-wrapper-info > * {
+    color: var(--ntmode-purple-600);
+}
+
+.dark-mode #new-todo {
+    background-color: var(--ntmode-purple-900);
+}
+
+.dark-mode .categories-wrapper button:not(#all-btn){
+    color: var(--ntmode-purple-600);
+}
+
+.dark-mode .categories-wrapper > button {
+    font-weight: 700;
+}
+
