@@ -12,10 +12,6 @@ let themeButton = document.querySelector(".theme-toggle");
 let darkMode = false;
 let tasks = [];
 
-function addClass(tag, className){
-    tag.classList.add(className);
-}
-
 function saveTasks(){
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
@@ -77,14 +73,8 @@ function clearAllTasks(){
 
 function changeTheme(){
     darkMode = !darkMode;
-    if(darkMode){
-        body.classList.add("dark-mode");
-        saveThemePreference();
-    }
-    else{
-        body.classList.remove("dark-mode");
-        saveThemePreference();
-    }
+    body.classList.toggle("dark-mode");
+    saveThemePreference();
 }
 
 function saveThemePreference(){
@@ -95,6 +85,7 @@ function loadThemePreference(){
     const savedTheme = localStorage.getItem("theme");
     if(JSON.parse(savedTheme)){
         body.classList.add("dark-mode");
+        darkMode = true;
     }
 }
 
@@ -104,25 +95,22 @@ function clearCompleted(){
     saveTasks();
 }
 
-function filterTask(value){
-    filterStatus = value;
+function filterTask(){
+    if(filterStatus === "all"){
+        return tasks;
+    }
+    if(filterStatus === "active"){
+        return tasks.filter(task => task.completed === false);
+    }
+    else if(filterStatus === "completed"){
+        return tasks.filter(task => task.completed === true);
+    }
 }
 
 function updateList(){
-    let tasksToRender = []
-    if(filterStatus === "all"){
-        tasksToRender = tasks;
-    }
-    else if(filterStatus === "active"){
-        const activeTasks = tasks.filter(task => task.completed === false);
-        tasksToRender = activeTasks;
-    }
-    else if(filterStatus === "completed"){
-        const completedTasks = tasks.filter(task => task.completed === true);
-        tasksToRender = completedTasks;
-    }
+
     clearAllTasks();
-    tasksToRender.forEach(renderTask)
+    filterTask().forEach(renderTask)
     itemsLeftCounter()
 
 }
@@ -139,9 +127,9 @@ function renderTask(newTask){
         taskItem.classList.add("completed")
     }
 
-    addClass(taskItem, "flex");
-    addClass(checkButton, "check");
-    addClass(crossButton, "cross");
+    taskItem.classList.add("flex");
+    checkButton.classList.add("check");
+    crossButton.classList.add("cross");
 
     taskItem.appendChild(checkButton);
     taskItem.appendChild(taskText);
@@ -180,17 +168,17 @@ tasksContainer.addEventListener("click", (e)=>{
 )
 
 activeFilterBtn.addEventListener("click", ()=>{
-    filterTask("active");
+    filterStatus = "active";
     updateList()
 })
 
 completedFilterBtn.addEventListener("click",()=>{
-    filterTask("completed");
+    filterStatus = "completed";
     updateList()
 })
 
 allFilterBtn.addEventListener("click",()=>{
-    filterTask("all");
+    filterStatus = "all";
     updateList();
 })
 

@@ -34,7 +34,7 @@ body {
 .theme-toggle{
     height: 30px;
     width: 30px;
-    background: url(images/icon-sun.svg) no-repeat center / contain;
+    background: url(images/icon-moon.svg) no-repeat center / contain;
 }
 
 button {
@@ -185,7 +185,7 @@ footer {
 }
 
 .dark-mode .theme-toggle {
-    background-image: url(images/icon-moon.svg);
+    background-image: url(images/icon-sun.svg);
 }
 
 .dark-mode .check {
