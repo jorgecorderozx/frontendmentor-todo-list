@@ -73,6 +73,12 @@ function clearAllTasks(){
     tasksContainer.replaceChildren();
 }
 
+
+function clearCompleted(){
+    tasks = tasks.filter(task => task.completed !== true);
+    saveTasks();
+}
+
 function filterTask(value){
     filterStatus = value;
 }
@@ -156,6 +162,11 @@ completedFilterBtn.addEventListener("click",()=>{
 
 allFilterBtn.addEventListener("click",()=>{
     filterTask("all");
+    updateList();
+})
+
+clearButton.addEventListener("click", ()=>{
+    clearCompleted();
     updateList();
 })
 
