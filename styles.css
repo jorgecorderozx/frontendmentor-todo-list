@@ -56,10 +56,6 @@ button {
     color: var(--ltmode-gray-600);
 }
 
-#all-btn {
-    color: var(--ltmode-blue-500);
-}
-
 .card-section {
     background-color: var(--ltmode-gray-50);
     border-radius: 0.5rem;
@@ -159,6 +155,18 @@ li {
     gap: 1rem;
 }
 
+.categories-wrapper > button {
+    font-weight: 700;
+}
+
+.categories-wrapper button:not(.selected){
+    color: var(--ntmode-purple-600);
+}
+
+.selected {
+    color: hsl(220, 98%, 61%);
+}
+
 .clear {
     cursor: pointer;
 }
@@ -206,13 +214,5 @@ footer {
 
 .dark-mode #new-todo {
     background-color: var(--ntmode-purple-900);
-}
-
-.dark-mode .categories-wrapper button:not(#all-btn){
-    color: var(--ntmode-purple-600);
-}
-
-.dark-mode .categories-wrapper > button {
-    font-weight: 700;
 }
 

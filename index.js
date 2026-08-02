@@ -4,6 +4,7 @@ let form = document.querySelector("form");
 let taskInput = document.getElementById("new-todo");
 let clearButton = document.querySelector(".clear");
 let idCounter = 0;
+let categoriesContainer = document.querySelector(".categories-wrapper");
 let allFilterBtn = document.getElementById("all-btn");
 let completedFilterBtn = document.getElementById("completed-btn");
 let activeFilterBtn = document.getElementById("active-btn");
@@ -12,28 +13,34 @@ let themeButton = document.querySelector(".theme-toggle");
 let darkMode = false;
 let tasks = [];
 
-function saveTasks(){
+function loadApp() {
+    loadTasks();
+    loadThemePreference();
+    setIdCounter();
+    updateList();
+}
+function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-function loadTasks(){
+function loadTasks() {
     const savedTasks = localStorage.getItem("tasks");
-    if(savedTasks){
-    tasks = JSON.parse(savedTasks);
-}
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+    }
 }
 
-function setIdCounter(){
+function setIdCounter() {
     let greatestId = 0;
-    for(const task of tasks){
-        if(task.id > greatestId){
+    for (const task of tasks) {
+        if (task.id > greatestId) {
             greatestId = task.id;
         }
     }
     idCounter = greatestId;
 }
 
-function createTask(taskDescription){
+function createTask(taskDescription) {
     idCounter++
     let task = {
         id: idCounter,
@@ -45,69 +52,79 @@ function createTask(taskDescription){
     return task;
 }
 
-function completeTask(taskItem){
-        const completedTask = tasks.find(task => task.id === Number(taskItem.dataset.id));
-        completedTask.completed = !completedTask.completed;
-        saveTasks();
+function completeTask(taskItem) {
+    const completedTask = tasks.find(task => task.id === Number(taskItem.dataset.id));
+    completedTask.completed = !completedTask.completed;
+    saveTasks();
 }
 
-function deleteTask(taskItem){
+function deleteTask(taskItem) {
     tasks = tasks.filter(task => task.id !== Number(taskItem.dataset.id));
     saveTasks();
 }
 
 
-function itemsLeftCounter(){
+function itemsLeftCounter() {
     const itemsLeft = tasks.filter(task => task.completed !== true);
     itemsLeftUI(itemsLeft);
 }
 
-function itemsLeftUI(itemsLeft){
+function itemsLeftUI(itemsLeft) {
     const itemsLeftElement = document.querySelector(".remaining-items");
     itemsLeft.length === 1 ? itemsLeftElement.textContent = "1 item left" : itemsLeftElement.textContent = `${itemsLeft.length} items left`;
 }
 
-function clearAllTasks(){
+function clearAllTasks() {
     tasksContainer.replaceChildren();
 }
 
-function changeTheme(){
+function changeTheme() {
     darkMode = !darkMode;
     body.classList.toggle("dark-mode");
     saveThemePreference();
 }
 
-function saveThemePreference(){
+function saveThemePreference() {
     localStorage.setItem("theme", JSON.stringify(darkMode));
 }
 
-function loadThemePreference(){
+function loadThemePreference() {
     const savedTheme = localStorage.getItem("theme");
-    if(JSON.parse(savedTheme)){
+    if (JSON.parse(savedTheme)) {
         body.classList.add("dark-mode");
         darkMode = true;
     }
 }
 
 
-function clearCompleted(){
+function clearCompleted() {
     tasks = tasks.filter(task => task.completed !== true);
     saveTasks();
 }
 
-function filterTask(){
-    if(filterStatus === "all"){
+function filterTask() {
+    if (filterStatus === "all") {
         return tasks;
     }
-    if(filterStatus === "active"){
+    if (filterStatus === "active") {
         return tasks.filter(task => task.completed === false);
     }
-    else if(filterStatus === "completed"){
+    else if (filterStatus === "completed") {
         return tasks.filter(task => task.completed === true);
     }
 }
 
-function updateList(){
+function selectedFilterUI(){
+    const filterButtons = document.querySelectorAll(".categories-wrapper > button");
+    filterButtons.forEach((filter)=>{
+        filter.classList.remove("selected");
+    });
+    const selectedFilterBtn = document.getElementById(`${filterStatus}-btn`);
+    selectedFilterBtn.classList.add("selected");
+
+}
+
+function updateList() {
 
     clearAllTasks();
     filterTask().forEach(renderTask)
@@ -115,7 +132,7 @@ function updateList(){
 
 }
 
-function renderTask(newTask){
+function renderTask(newTask) {
     const taskItem = document.createElement("li");
     const checkButton = document.createElement("button");
     const taskText = document.createElement("span");
@@ -123,7 +140,7 @@ function renderTask(newTask){
 
     taskItem.dataset.id = newTask.id;
     taskText.textContent = newTask.description;
-    if(newTask.completed === true) {
+    if (newTask.completed === true) {
         taskItem.classList.add("completed")
     }
 
@@ -140,26 +157,26 @@ function renderTask(newTask){
 
 }
 
-themeButton.addEventListener("click", ()=>{
+themeButton.addEventListener("click", () => {
     changeTheme();
 });
 
-form.addEventListener("submit", (e)=>{
+form.addEventListener("submit", (e) => {
     e.preventDefault();
-    if(taskInput.value.trim() === "") return
-    else{
+    if (taskInput.value.trim() === "") return
+    else {
         const newTask = createTask(taskInput.value);
         taskInput.value = "";
         updateList();
     }
 })
 
-tasksContainer.addEventListener("click", (e)=>{
-   const taskItem = e.target.closest("li");
-   if (e.target.classList.contains("check")) {
+tasksContainer.addEventListener("click", (e) => {
+    const taskItem = e.target.closest("li");
+    if (e.target.classList.contains("check")) {
         completeTask(taskItem);
         updateList();
-    } 
+    }
     else if (e.target.classList.contains("cross")) {
         deleteTask(taskItem);
         updateList();
@@ -167,27 +184,29 @@ tasksContainer.addEventListener("click", (e)=>{
 }
 )
 
-activeFilterBtn.addEventListener("click", ()=>{
+categoriesContainer.addEventListener("click", (e)=>{
+    const selectedButton = e.target.closest("button");
+    if(selectedButton){
+        updateList();
+        selectedFilterUI();
+    }
+})
+
+activeFilterBtn.addEventListener("click", () => {
     filterStatus = "active";
-    updateList()
 })
 
-completedFilterBtn.addEventListener("click",()=>{
+completedFilterBtn.addEventListener("click", () => {
     filterStatus = "completed";
-    updateList()
 })
 
-allFilterBtn.addEventListener("click",()=>{
+allFilterBtn.addEventListener("click", () => {
     filterStatus = "all";
-    updateList();
 })
 
-clearButton.addEventListener("click", ()=>{
+clearButton.addEventListener("click", () => {
     clearCompleted();
     updateList();
 })
 
-loadTasks();
-loadThemePreference();
-setIdCounter();
-updateList();
+loadApp();
